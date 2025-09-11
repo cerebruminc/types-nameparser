@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/cerebruminc/types-nameparser/compare/v0.2.0...v0.3.0) (2025-09-11)
+
+
+### Features
+
+* enhance metadata in pyproject.toml with authors, license, and classifiers ([d24350a](https://github.com/cerebruminc/types-nameparser/commit/d24350a65e22f97b4ae6f2782eddaa80a7ab0d60))
+
 ## [0.2.0](https://github.com/cerebruminc/types-nameparser/compare/v0.1.0...v0.2.0) (2025-09-11)
 
 
