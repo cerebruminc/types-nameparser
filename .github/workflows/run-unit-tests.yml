@@ -30,10 +30,6 @@ jobs:
           uv sync
           uv pip install -e .
 
-      - name: Copy .env.template to .env
-        run: |
-          cp .env.template .env
-
       - name: Run linting
         run: |
           just lint
