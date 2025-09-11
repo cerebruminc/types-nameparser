@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1](https://github.com/cerebruminc/types-nameparser/compare/v0.3.0...v0.3.1) (2025-09-11)
+
+
+### Miscellaneous Chores
+
+* update pypa/gh-action-pypi-publish to use latest release version ([7521424](https://github.com/cerebruminc/types-nameparser/commit/7521424dddfc4305d2174648c02c59d98c27f050))
+
 ## [0.3.0](https://github.com/cerebruminc/types-nameparser/compare/v0.2.0...v0.3.0) (2025-09-11)
 
 
