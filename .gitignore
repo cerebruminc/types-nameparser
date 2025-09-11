@@ -1,0 +1,41 @@
+.DS_Store
+launch_synapse.sh
+
+__pycache__/
+cache/
+log/
+
+test-data/
+
+# Docker related
+.env
+.env.*
+!.env.template
+docker-compose.override.yml
+
+bin/
+state.json
+lib/
+reports.csv
+cache/
+pyvenv.cfg
+include/
+
+# Container runtime files
+videos/
+
+kubernetes/development.yml
+kubernetes/staging.yml
+kubernetes/production.yml
+
+venv/
+
+# Coverage
+.coverage
+coverage.xml
+htmlcov/
+
+.pytest_cache/
+*.egg-info/
+.ruff_cache/
+.mypy_cache/
