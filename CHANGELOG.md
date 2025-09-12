@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.3.2](https://github.com/cerebruminc/types-nameparser/compare/v0.3.1...v0.3.2) (2025-09-12)
+
+
+### Bug Fixes
+
+* correct package structure for type stubs to resolve import-untyped errors ([80679fe](https://github.com/cerebruminc/types-nameparser/commit/80679fe9439ec902bf94b8e6ce254dd4e62fd39a))
+
+
+### Miscellaneous Chores
+
+* fix incorrect env.template copy ([fbbdf64](https://github.com/cerebruminc/types-nameparser/commit/fbbdf64f245002aba31dff67102a2f9716563ecb))
+
 ## [0.3.1](https://github.com/cerebruminc/types-nameparser/compare/v0.3.0...v0.3.1) (2025-09-11)
 
 
