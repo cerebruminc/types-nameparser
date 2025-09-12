@@ -1,0 +1,147 @@
+name: Test Type Package
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  test-type-package:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install UV
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+
+      - name: Build the type package
+        run: |
+          uv build
+
+      - name: Install the actual nameparser library
+        run: |
+          uv pip install nameparser
+
+      - name: Install the built type package
+        run: |
+          uv pip install dist/types_nameparser-*.whl
+
+      - name: Install mypy for type checking
+        run: |
+          uv pip install mypy
+
+      - name: Test basic import functionality
+        run: |
+          python -c "
+          import nameparser
+          from nameparser import HumanName
+          print('✓ Basic import successful')
+          
+          # Test that we can create a HumanName instance
+          name = HumanName('John Michael Smith')
+          print('✓ HumanName instantiation successful')
+          
+          # Test property access
+          first = name.first
+          last = name.last
+          middle = name.middle
+          print(f'✓ Property access successful: {first} {middle} {last}')
+          "
+
+      - name: Test mypy type checking
+        run: |
+          # Create a test file to verify mypy can find the type stubs
+          cat > test_type_checking.py << 'EOF'
+          from nameparser import HumanName
+
+          def test_name_parsing() -> None:
+              """Test that HumanName can be used with proper type checking."""
+              name = HumanName("John Michael Smith")
+              first_name: str = name.first
+              last_name: str = name.last
+              middle_name: str = name.middle
+              title: str = name.title
+              suffix: str = name.suffix
+              nickname: str = name.nickname
+              
+              # Test string representations
+              name_str: str = str(name)
+              name_repr: str = repr(name)
+              
+              print(f"First: {first_name}")
+              print(f"Last: {last_name}")
+              print(f"Middle: {middle_name}")
+              print(f"Title: {title}")
+              print(f"Suffix: {suffix}")
+              print(f"Nickname: {nickname}")
+
+          if __name__ == "__main__":
+              test_name_parsing()
+          EOF
+
+          # Run mypy type checking
+          mypy test_type_checking.py --strict
+
+      - name: Test that py.typed file is present
+        run: |
+          python -c "
+          import nameparser
+          import os
+          import sys
+          
+          # Find the nameparser package location
+          nameparser_path = nameparser.__path__[0]
+          py_typed_path = os.path.join(nameparser_path, 'py.typed')
+          
+          if os.path.exists(py_typed_path):
+              print('✓ py.typed file found')
+          else:
+              print('✗ py.typed file not found')
+              sys.exit(1)
+          "
+
+      - name: Test package structure
+        run: |
+          python -c "
+          import nameparser
+          import os
+          
+          # Check that the package has the expected structure
+          nameparser_path = nameparser.__path__[0]
+          
+          # Check for __init__.pyi
+          init_pyi = os.path.join(nameparser_path, '__init__.pyi')
+          if os.path.exists(init_pyi):
+              print('✓ __init__.pyi found')
+          else:
+              print('✗ __init__.pyi not found')
+              exit(1)
+              
+          # Check for py.typed
+          py_typed = os.path.join(nameparser_path, 'py.typed')
+          if os.path.exists(py_typed):
+              print('✓ py.typed found')
+          else:
+              print('✗ py.typed not found')
+              exit(1)
+              
+          print('✓ Package structure is correct')
+          "
+
+      - name: Clean up test files
+        if: always()
+        run: |
+          rm -f test_type_checking.py
