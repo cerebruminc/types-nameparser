@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.3](https://github.com/cerebruminc/types-nameparser/compare/v0.3.2...v0.3.3) (2026-06-03)
+
+
+### Miscellaneous Chores
+
+* **ci:** bump actions to their latest version ([158f754](https://github.com/cerebruminc/types-nameparser/commit/158f754457a40eab6498523cce110d8db7343444))
+
 ## [0.3.2](https://github.com/cerebruminc/types-nameparser/compare/v0.3.1...v0.3.2) (2025-09-12)
 
 
